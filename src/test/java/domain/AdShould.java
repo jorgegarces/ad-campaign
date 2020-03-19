@@ -76,4 +76,22 @@ public class AdShould {
 
         Assert.assertEquals("Title must be max 50 characters long", expected);
     }
+
+    @Test
+    public void not_allow_building_when_title_and_description_are_the_same() {
+
+        String expected = "";
+
+        try {
+            new Ad.AdBuilder()
+                    .title("Test ad titlecription")
+                    .description("Test ad titlecription")
+                    .publicationDate(LocalDate.of(2019, 10, 1))
+                    .build();
+        } catch(IllegalStateException e) {
+            expected = e.getMessage();
+        }
+
+        Assert.assertEquals("Title and description cannot be the same", expected);
+    }
 }
