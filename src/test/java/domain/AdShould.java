@@ -41,4 +41,21 @@ public class AdShould {
 
         Assert.assertEquals("Description cannot be empty", expected);
     }
+
+    @Test
+    public void not_allow_building_without_a_date() {
+
+        String expected = "";
+
+        try {
+            new Ad.AdBuilder()
+                    .title("New add Title")
+                    .description("Test ad description")
+                    .build();
+        } catch(IllegalStateException e) {
+            expected = e.getMessage();
+        }
+
+        Assert.assertEquals("Publication date cannot be empty", expected);
+    }
 }
