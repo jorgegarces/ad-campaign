@@ -1,9 +1,11 @@
 package infrastructure;
 
 import domain.ad.Ad;
+import domain.exceptions.AdDoesNotExistException;
 import infrastructure.inMemory.InMemoryAdRepository;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 
 import java.time.LocalDate;
 
@@ -26,5 +28,11 @@ public class InMemoryAdRepositoryShould {
         testRepo.remove(testAd.getId());
 
         Assert.assertEquals(emptyRepo, testRepo);
+    }
+
+    @Test
+    public void throw_an_error_when_trying_to_remove_an_ad_that_does_not_exist() throws RuntimeException {
+
+        Assertions.assertThrows(AdDoesNotExistException.class, () -> testRepo.remove(testAd.getId()));
     }
 }
