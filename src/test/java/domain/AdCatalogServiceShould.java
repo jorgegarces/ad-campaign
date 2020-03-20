@@ -1,6 +1,7 @@
 package domain;
 
 import domain.ad.Ad;
+import domain.ad.AdId;
 import infrastructure.AdRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -43,9 +44,18 @@ public class AdCatalogServiceShould {
 
     @Test
     public void command_repo_to_remove_an_ad() {
+        AdId adId = new AdId();
 
-        adCatalogService.removeAd(testAd.getId());
+        adCatalogService.removeAd(adId);
 
-        verify(adRepository).remove(testAd.getId());
+        verify(adRepository).remove(adId);
+    }
+
+    @Test
+    public void command_repo_to_purge_from_given_date() {
+
+        adCatalogService.purgeFromDate(LocalDate.of(2020, 12, 01));
+
+        verify(adRepository).purgeAdsOlderThan(LocalDate.of(2020, 12, 01));
     }
 }

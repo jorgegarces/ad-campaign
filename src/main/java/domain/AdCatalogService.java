@@ -4,6 +4,8 @@ import domain.ad.Ad;
 import domain.ad.AdId;
 import infrastructure.AdRepository;
 
+import java.time.LocalDate;
+
 public class AdCatalogService {
 
     private  AdRepository adRepository;
@@ -18,5 +20,9 @@ public class AdCatalogService {
 
     public void removeAd(AdId id) {
         adRepository.remove(id);
+    }
+
+    public void purgeFromDate(LocalDate purgeDate) {
+        adRepository.purgeAdsOlderThan(purgeDate);
     }
 }

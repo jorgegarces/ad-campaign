@@ -11,6 +11,7 @@ public class Ad {
     private final String title;
     private final String description;
     private final LocalDate publicationDate;
+    private int visits = 0;
 
     private Ad(AdBuilder builder) {
         this.id = builder.id;
@@ -27,11 +28,21 @@ public class Ad {
         return this.publicationDate;
     }
 
+    private void incrementVisits() {
+        this.visits += 1;
+    }
+
+    public int getVisits() {
+        return this.visits;
+    }
+
     public AdDTO createDTO() {
+        this.incrementVisits();
         AdDTO adDTO = new AdDTO();
         adDTO.title = this.title;
         adDTO.description = this.description;
         adDTO.date = this.publicationDate;
+        adDTO.visits = this.visits;
 
         return adDTO;
     }

@@ -6,6 +6,7 @@ public class AdDTO {
     public String title;
     public String description;
     public LocalDate date;
+    public int visits;
 
     @Override
     public String toString() {

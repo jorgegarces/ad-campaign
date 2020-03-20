@@ -1,6 +1,7 @@
 package infrastructure;
 
 import domain.ad.Ad;
+import domain.ad.dto.AdDTO;
 import domain.exceptions.AdDoesNotExistException;
 import domain.exceptions.DuplicateAdException;
 import infrastructure.inMemory.InMemoryAdRepository;
@@ -126,5 +127,15 @@ public class InMemoryAdRepositoryShould {
         testRepo.add(testAd);
 
         Assert.assertEquals("2019-10-01 Test ad title\nTest ad description\n-------------\n", testRepo.get(testAd.getId()).toString());
+    }
+
+    @Test
+    public void increase_an_ads_visits_counter_whenever_it_is_requested() {
+
+        testRepo.add(testAd);
+        testRepo.get(testAd.getId());
+        AdDTO dto = testRepo.get(testAd.getId());
+
+        Assert.assertEquals(2, dto.visits);
     }
 }
