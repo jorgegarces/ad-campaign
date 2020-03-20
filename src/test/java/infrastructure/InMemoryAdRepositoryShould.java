@@ -66,4 +66,35 @@ public class InMemoryAdRepositoryShould {
         Assert.assertEquals("2019-10-01 Test ad title\nTest ad description\n-------------\n" +
                 "2005-10-01 Test ad title 2\nTest ad description 2\n-------------\n", testRepo.list().toString());
     }
+
+    @Test
+    public void purge_ads_older_than_a_given_date_not_including_given_day() {
+
+        Ad testAd2 = new Ad.AdBuilder()
+                .title("Test ad title 2")
+                .description("Test ad description 2")
+                .publicationDate(LocalDate.of(2019, 10, 2))
+                .build();
+        Ad testAd3 = new Ad.AdBuilder()
+                .title("Test ad title 3")
+                .description("Test ad description 3")
+                .publicationDate(LocalDate.of(2019, 10, 3))
+                .build();
+        Ad testAd4 = new Ad.AdBuilder()
+                .title("Test ad title 4")
+                .description("Test ad description 5")
+                .publicationDate(LocalDate.of(2019, 10, 4))
+                .build();
+        testRepo.add(testAd2);
+        testRepo.add(testAd4);
+        testRepo.add(testAd);
+        testRepo.add(testAd3);
+        AdRepository expectedRepo = new InMemoryAdRepository();
+        expectedRepo.add(testAd2);
+        expectedRepo.add(testAd);
+
+        testRepo.purgeAdsOlderThan(LocalDate.of(2019, 10, 2));
+
+        Assert.assertEquals(expectedRepo, testRepo);
+    }
 }

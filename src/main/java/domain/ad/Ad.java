@@ -23,6 +23,10 @@ public class Ad {
         return this.id;
     }
 
+    public LocalDate getDate() {
+        return this.publicationDate;
+    }
+
     public AdDTO createDTO() {
         AdDTO adDTO = new AdDTO();
         adDTO.title = this.title;
@@ -73,6 +77,7 @@ public class Ad {
         return Objects.equals(title, ad.title) &&
                 Objects.equals(description, ad.description);
     }
+
 
     @Override
     public int hashCode() {

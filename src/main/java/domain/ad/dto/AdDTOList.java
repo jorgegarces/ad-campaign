@@ -13,8 +13,6 @@ public class AdDTOList {
     @Override
     public String toString() {
 
-        adDTOlist.sort((a, b) -> b.date.compareTo(a.date));
-
         StringBuilder formattedAdDTOList = new StringBuilder();
 
         for (AdDTO adDTO : adDTOlist) {
