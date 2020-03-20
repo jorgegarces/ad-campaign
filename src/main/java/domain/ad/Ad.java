@@ -78,6 +78,12 @@ public class Ad {
                 Objects.equals(description, ad.description);
     }
 
+    @Override
+    public String toString() {
+        return "Ad{" +
+                "publicationDate=" + publicationDate +
+                '}';
+    }
 
     @Override
     public int hashCode() {

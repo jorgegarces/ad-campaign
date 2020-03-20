@@ -25,6 +25,11 @@ public class InMemoryAdRepository implements AdRepository {
             if (ad.equals(newAd)) throw new DuplicateAdException();
         }
 
+        if (catalog.size() == 100) {
+            sortCatalog();
+            catalog.remove(catalog.size() -1);
+        }
+
         catalog.add(newAd);
     }
 
