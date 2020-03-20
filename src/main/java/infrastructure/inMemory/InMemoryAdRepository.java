@@ -2,6 +2,7 @@ package infrastructure.inMemory;
 
 import domain.ad.Ad;
 import domain.ad.AdId;
+import domain.ad.dto.AdDTO;
 import domain.ad.dto.AdDTOList;
 import domain.exceptions.AdDoesNotExistException;
 import domain.exceptions.DuplicateAdException;
@@ -50,6 +51,14 @@ public class InMemoryAdRepository implements AdRepository {
         for (Ad ad : catalog) adDTOList.add(ad.createDTO());
 
         return adDTOList;
+    }
+
+    @Override
+    public AdDTO get(AdId adId) throws RuntimeException {
+        for (Ad ad : catalog) {
+            if (ad.getId() == adId) return ad.createDTO();
+        }
+        return null;
     }
 
     @Override

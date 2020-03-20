@@ -72,8 +72,8 @@ public class InMemoryAdRepositoryShould {
         testRepo.add(testAd2);
         testRepo.add(testAd);
 
-        Assert.assertEquals("2019-10-01 Test ad title\nTest ad description\n-------------\n" +
-                "2005-10-01 Test ad title 2\nTest ad description 2\n-------------\n", testRepo.list().toString());
+        Assert.assertEquals("2019-10-02 Test ad title 2\nTest ad description 2\n-------------\n" +
+                "2019-10-01 Test ad title\nTest ad description\n-------------\n", testRepo.list().toString());
     }
 
     @Test
@@ -118,5 +118,13 @@ public class InMemoryAdRepositoryShould {
         testRepo.purgeAdsOlderThan(LocalDate.of(1490, 12, 9));
 
         Assert.assertEquals(expectedRepo, testRepo);
+    }
+
+    @Test
+    public void return_an_ad_by_its_id() {
+
+        testRepo.add(testAd);
+
+        Assert.assertEquals("2019-10-01 Test ad title\nTest ad description\n-------------\n", testRepo.get(testAd.getId()).toString());
     }
 }
