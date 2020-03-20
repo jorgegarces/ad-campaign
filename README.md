@@ -21,5 +21,6 @@ To do:
 - Better algorithms for repo iteration.
 - Test parametrization.
 - Formatter service to handle DTO presentation.
+- Timeserver service to handle dates.
 - Look for a better design pattern to handle the country especifications, tried to apply factory and strategy but felt like I was adding unnecesary complexity. Will look deeper into it.
 - Sprint 4 features.
