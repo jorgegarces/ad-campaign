@@ -11,17 +11,18 @@ import infrastructure.AdRepository;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.function.DoubleToIntFunction;
 
 public class InMemoryAdRepository implements AdRepository {
 
     private ArrayList<Ad> catalog = new ArrayList<Ad>();
 
-    private void sortCatalogByDate() {
-        catalog.sort(Ad.DATE_COMPARATOR);
+    protected void sortCatalogByDate() {
+        catalog.sort((a, b) -> b.getDate().compareTo(a.getDate()));
     }
 
-    private void sortCatalogByVisits() {
-        catalog.sort(Ad.VISIT_COMPARATOR);
+    protected void sortCatalogByVisits() {
+        catalog.sort(Ad.VISIT_SORT);
     }
 
     @Override
@@ -31,7 +32,7 @@ public class InMemoryAdRepository implements AdRepository {
         }
 
         if (catalog.size() == 100) {
-            sortCatalogByDate();
+            this.sortCatalogByDate();
             catalog.remove(catalog.size() -1);
         }
 

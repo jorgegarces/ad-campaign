@@ -11,7 +11,6 @@ import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
 import java.time.LocalDate;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class InMemoryAdRepositoryShould {
 
@@ -32,7 +31,7 @@ public class InMemoryAdRepositoryShould {
             .build();
     Ad testAd4 = new Ad.AdBuilder()
             .title("Test ad title 4")
-            .description("Test ad description 5")
+            .description("Test ad description 4")
             .publicationDate(LocalDate.of(2019, 10, 4))
             .build();
 
@@ -105,20 +104,19 @@ public class InMemoryAdRepositoryShould {
                 .publicationDate(LocalDate.of(1490, 12, 9))
                 .build();
 
-        for (int i = 0; i < 99; i++) {
+        for (int i = 0; i < 100; i++) {
             Ad randomAd = new Ad.AdBuilder()
                     .title("Loop ad Title")
                     .description(RandomStringUtils.random(length, useLetters, useNumbers))
                     .publicationDate(LocalDate.of(1490, 12, 10))
                     .build();
-            testRepo.add(randomAd);
+            expectedRepo.add(randomAd);
         }
 
-        testRepo.add(oldAd);
-        testRepo.add(testAd);
-        testRepo.purgeAdsOlderThan(LocalDate.of(1490, 12, 9));
+        expectedRepo.add(oldAd);
+        expectedRepo.add(testAd);
 
-        Assert.assertEquals(expectedRepo, testRepo);
+        Assert.assertNull(expectedRepo.get(oldAd.getId()));
     }
 
     @Test

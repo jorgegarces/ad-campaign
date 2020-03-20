@@ -33,21 +33,17 @@ public class Ad {
         this.visits += 1;
     }
 
-    public static final Comparator<Ad> VISIT_COMPARATOR = new Comparator<Ad>() {
+    public static final Comparator<Ad> VISIT_SORT = new Comparator<Ad>() {
         public int compare(Ad a, Ad b) {
-            return b.getVisits() - a.getVisits();
+            return b.visits - a.visits;
         }
     };
 
-    public static final Comparator<Ad> DATE_COMPARATOR = new Comparator<Ad>() {
+    public static final Comparator<Ad> DATE_SORT = new Comparator<Ad>() {
         public int compare(Ad a, Ad b) {
             return b.publicationDate.compareTo(a.publicationDate);
         }
     };
-
-    public int getVisits() {
-        return this.visits;
-    }
 
     public AdDTO createDTO() {
         this.incrementVisits();
