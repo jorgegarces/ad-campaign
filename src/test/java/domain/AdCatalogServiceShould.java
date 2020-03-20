@@ -58,4 +58,12 @@ public class AdCatalogServiceShould {
 
         verify(adRepository).purgeAdsOlderThan(LocalDate.of(2020, 12, 01));
     }
+
+    @Test
+    public void query_repo_for_a_list_of_ads() {
+
+        adCatalogService.retrieveAds();
+
+        verify(adRepository).list();
+    }
 }

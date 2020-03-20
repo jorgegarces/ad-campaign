@@ -25,4 +25,8 @@ public class AdCatalogService {
     public void purgeFromDate(LocalDate purgeDate) {
         adRepository.purgeAdsOlderThan(purgeDate);
     }
+
+    public void retrieveAds() {
+        adRepository.list();
+    }
 }
