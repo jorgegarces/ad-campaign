@@ -4,6 +4,7 @@ import domain.ad.Ad;
 import infrastructure.AdRepository;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -16,6 +17,9 @@ public class AdCatalogServiceShould {
 
     @Mock
     AdRepository adRepository;
+
+    @InjectMocks
+    AdCatalogService adCatalogService;
 
     @Before
     public void init() {
@@ -31,9 +35,17 @@ public class AdCatalogServiceShould {
 
     @Test
     public void command_repo_to_save_a_new_ad() {
-        AdCatalogService adCatalogService = new AdCatalogService(adRepository);
+
         adCatalogService.newAd(testAd);
 
         verify(adRepository).add(testAd);
+    }
+
+    @Test
+    public void command_repo_to_remove_an_ad() {
+
+        adCatalogService.removeAd(testAd.getId());
+
+        verify(adRepository).remove(testAd.getId());
     }
 }

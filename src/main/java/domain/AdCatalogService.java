@@ -1,7 +1,7 @@
 package domain;
 
 import domain.ad.Ad;
-import domain.exceptions.DuplicateAdException;
+import domain.ad.AdId;
 import infrastructure.AdRepository;
 
 public class AdCatalogService {
@@ -14,5 +14,9 @@ public class AdCatalogService {
 
     public void newAd(Ad ad) {
         adRepository.add(ad);
+    }
+
+    public void removeAd(AdId id) {
+        adRepository.remove(id);
     }
 }
