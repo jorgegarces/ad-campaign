@@ -16,8 +16,12 @@ public class InMemoryAdRepository implements AdRepository {
 
     private ArrayList<Ad> catalog = new ArrayList<Ad>();
 
-    private void sortCatalog() {
-        catalog.sort((a, b) -> b.getDate().compareTo(a.getDate()));
+    private void sortCatalogByDate() {
+        catalog.sort(Ad.DATE_COMPARATOR);
+    }
+
+    private void sortCatalogByVisits() {
+        catalog.sort(Ad.VISIT_COMPARATOR);
     }
 
     @Override
@@ -27,7 +31,7 @@ public class InMemoryAdRepository implements AdRepository {
         }
 
         if (catalog.size() == 100) {
-            sortCatalog();
+            sortCatalogByDate();
             catalog.remove(catalog.size() -1);
         }
 
@@ -46,7 +50,7 @@ public class InMemoryAdRepository implements AdRepository {
 
     @Override
     public AdDTOList list() {
-        sortCatalog();
+        sortCatalogByDate();
         AdDTOList adDTOList = new AdDTOList();
         for (Ad ad : catalog) adDTOList.add(ad.createDTO());
 
@@ -81,4 +85,3 @@ public class InMemoryAdRepository implements AdRepository {
                 '}';
     }
 }
-

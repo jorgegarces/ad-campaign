@@ -138,4 +138,5 @@ public class InMemoryAdRepositoryShould {
 
         Assert.assertEquals(2, dto.visits);
     }
+
 }

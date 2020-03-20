@@ -14,5 +14,4 @@ public interface AdRepository {
     void purgeAdsOlderThan(LocalDate purgeDate);
     AdDTOList list();
     AdDTO get(AdId adId);
-
 }
