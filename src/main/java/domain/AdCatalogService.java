@@ -3,6 +3,7 @@ package domain;
 import domain.ad.Ad;
 import domain.ad.AdId;
 import infrastructure.AdRepository;
+import infrastructure.Country;
 
 import java.time.LocalDate;
 
@@ -14,8 +15,8 @@ public class AdCatalogService {
         this.adRepository = adRepository;
     }
 
-    public void newAd(Ad ad) {
-        adRepository.add(ad);
+    public void newAd(Ad ad, Country country) {
+        adRepository.add(ad, country);
     }
 
     public void removeAd(AdId id) {

@@ -9,7 +9,7 @@ import java.time.LocalDate;
 
 public interface AdRepository {
 
-    void add(Ad ad);
+    void add(Ad ad, Country country);
     void remove(AdId adId);
     void purgeAdsOlderThan(LocalDate purgeDate);
     AdDTOList list();

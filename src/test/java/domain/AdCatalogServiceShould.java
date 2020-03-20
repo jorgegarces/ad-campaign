@@ -3,6 +3,7 @@ package domain;
 import domain.ad.Ad;
 import domain.ad.AdId;
 import infrastructure.AdRepository;
+import infrastructure.Country;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -37,9 +38,9 @@ public class AdCatalogServiceShould {
     @Test
     public void command_repo_to_save_a_new_ad() {
 
-        adCatalogService.newAd(testAd);
+        adCatalogService.newAd(testAd, Country.DATE_COUNTRY);
 
-        verify(adRepository).add(testAd);
+        verify(adRepository).add(testAd, Country.DATE_COUNTRY);
     }
 
     @Test

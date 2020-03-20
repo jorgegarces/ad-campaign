@@ -7,11 +7,11 @@ import domain.ad.dto.AdDTOList;
 import domain.exceptions.AdDoesNotExistException;
 import domain.exceptions.DuplicateAdException;
 import infrastructure.AdRepository;
+import infrastructure.Country;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.function.DoubleToIntFunction;
 
 public class InMemoryAdRepository implements AdRepository {
 
@@ -26,15 +26,15 @@ public class InMemoryAdRepository implements AdRepository {
     }
 
     @Override
-    public void add(Ad newAd) {
+    public void add(Ad newAd, Country country) {
         for (Ad ad : catalog) {
             if (ad.equals(newAd)) throw new DuplicateAdException();
         }
 
-        if (catalog.size() == 100) {
-            this.sortCatalogByDate();
-            catalog.remove(catalog.size() -1);
-        }
+        if (country == Country.DATE_COUNTRY) this.sortCatalogByDate();
+        if (country == Country.VISITS_COUNTRY) this.sortCatalogByVisits();
+
+        if (catalog.size() == 100) catalog.remove(catalog.size() - 1);
 
         catalog.add(newAd);
     }
@@ -60,9 +60,7 @@ public class InMemoryAdRepository implements AdRepository {
 
     @Override
     public AdDTO get(AdId adId) throws RuntimeException {
-        for (Ad ad : catalog) {
-            if (ad.getId() == adId) return ad.createDTO();
-        }
+        for (Ad ad : catalog) if (ad.getId() == adId) return ad.createDTO();
         return null;
     }
 
