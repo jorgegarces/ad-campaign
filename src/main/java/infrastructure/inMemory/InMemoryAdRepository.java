@@ -2,10 +2,12 @@ package infrastructure.inMemory;
 
 import domain.ad.Ad;
 import domain.ad.AdId;
+import domain.ad.dto.AdDTO;
 import domain.ad.dto.AdDTOList;
 import domain.exceptions.AdDoesNotExistException;
 import domain.exceptions.DuplicateAdException;
 import infrastructure.AdRepository;
+import infrastructure.Country;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -15,20 +17,24 @@ public class InMemoryAdRepository implements AdRepository {
 
     private ArrayList<Ad> catalog = new ArrayList<Ad>();
 
-    private void sortCatalog() {
+    protected void sortCatalogByDate() {
         catalog.sort((a, b) -> b.getDate().compareTo(a.getDate()));
     }
 
+    protected void sortCatalogByVisits() {
+        catalog.sort(Ad.VISIT_SORT);
+    }
+
     @Override
-    public void add(Ad newAd) {
+    public void add(Ad newAd, Country country) {
         for (Ad ad : catalog) {
             if (ad.equals(newAd)) throw new DuplicateAdException();
         }
 
-        if (catalog.size() == 100) {
-            sortCatalog();
-            catalog.remove(catalog.size() -1);
-        }
+        if (country == Country.DATE_COUNTRY) this.sortCatalogByDate();
+        if (country == Country.VISITS_COUNTRY) this.sortCatalogByVisits();
+
+        if (catalog.size() == 100) catalog.remove(catalog.size() - 1);
 
         catalog.add(newAd);
     }
@@ -45,11 +51,17 @@ public class InMemoryAdRepository implements AdRepository {
 
     @Override
     public AdDTOList list() {
-        sortCatalog();
+        sortCatalogByDate();
         AdDTOList adDTOList = new AdDTOList();
         for (Ad ad : catalog) adDTOList.add(ad.createDTO());
 
         return adDTOList;
+    }
+
+    @Override
+    public AdDTO get(AdId adId) throws RuntimeException {
+        for (Ad ad : catalog) if (ad.getId() == adId) return ad.createDTO();
+        return null;
     }
 
     @Override
@@ -72,4 +84,3 @@ public class InMemoryAdRepository implements AdRepository {
                 '}';
     }
 }
-

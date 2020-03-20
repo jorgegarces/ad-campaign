@@ -3,6 +3,7 @@ package domain.ad;
 import domain.ad.dto.AdDTO;
 
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.Objects;
 
 public class Ad {
@@ -11,6 +12,7 @@ public class Ad {
     private final String title;
     private final String description;
     private final LocalDate publicationDate;
+    private int visits = 0;
 
     private Ad(AdBuilder builder) {
         this.id = builder.id;
@@ -27,11 +29,29 @@ public class Ad {
         return this.publicationDate;
     }
 
+    private void incrementVisits() {
+        this.visits += 1;
+    }
+
+    public static final Comparator<Ad> VISIT_SORT = new Comparator<Ad>() {
+        public int compare(Ad a, Ad b) {
+            return b.visits - a.visits;
+        }
+    };
+
+    public static final Comparator<Ad> DATE_SORT = new Comparator<Ad>() {
+        public int compare(Ad a, Ad b) {
+            return b.publicationDate.compareTo(a.publicationDate);
+        }
+    };
+
     public AdDTO createDTO() {
+        this.incrementVisits();
         AdDTO adDTO = new AdDTO();
         adDTO.title = this.title;
         adDTO.description = this.description;
         adDTO.date = this.publicationDate;
+        adDTO.visits = this.visits;
 
         return adDTO;
     }

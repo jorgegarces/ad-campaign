@@ -6,4 +6,15 @@ public class AdDTO {
     public String title;
     public String description;
     public LocalDate date;
+    public int visits;
+
+    @Override
+    public String toString() {
+        return this.date +
+                " " +
+                this.title +
+                "\n" +
+                this.description +
+                "\n-------------\n";
+    }
 }
